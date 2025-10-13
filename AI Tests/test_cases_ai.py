@@ -108,7 +108,7 @@ class TestBorrowBookByPatron:
         borrow_date = datetime.now() - timedelta(days=2)
         due_date = datetime.now() + timedelta(days=12)
 
-        for i in range(1, 6):
+        for i in range(0, 6):
             database.insert_borrow_record("123456", i, borrow_date, due_date)
 
         # Now trying to borrow another should fail
