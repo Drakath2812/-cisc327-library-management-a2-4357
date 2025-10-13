@@ -108,7 +108,7 @@ class TestBorrowBookByPatron:
         borrow_date = datetime.now() - timedelta(days=2)
         due_date = datetime.now() + timedelta(days=12)
 
-        add_book_to_catalog("Test", "Test author", 8888888888888, 10)
+        add_book_to_catalog("Test", "Test author", "8888888888888", 10)
 
         for i in range(0, 5):
             database.insert_borrow_record("123456", 4, borrow_date, due_date)
