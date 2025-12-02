@@ -1,6 +1,5 @@
 import pytest
 import os
-import sys
 
 import database
 from services.library_service import (
