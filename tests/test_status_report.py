@@ -10,15 +10,16 @@ from services.library_service import (
 @pytest.fixture(autouse=True)
 def temporary_db(monkeypatch):
     # Assign a temporary value to DATABASE so we don't affect the live database
-    monkeypatch.setattr(database, 'DATABASE', 'test_database.db')
+    monkeypatch.setenv("LIBRARY_DB_PATH", "unit_test.db")
 
     database.init_database()
     database.add_sample_data()
 
+    # Yield control to the test
     yield
 
-    # Remove the temp database file as it is no longer needed
-    os.remove("test_database.db")
+    # Teardown
+    os.remove("unit_test.db")
 
 def test_report_has_all_properties():
     report =  get_patron_status_report("123456")

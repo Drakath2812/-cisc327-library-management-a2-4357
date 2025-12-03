@@ -6,13 +6,14 @@ Handles all database operations and connections
 import sqlite3
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
+import os
 
-# Database configuration
-DATABASE = 'library.db'
+def get_db_path():
+    return os.environ.get("LIBRARY_DB_PATH", "library.db")
 
 def get_db_connection():
     """Get a database connection."""
-    conn = sqlite3.connect(DATABASE)
+    conn = sqlite3.connect(get_db_path())
     conn.row_factory = sqlite3.Row  # This enables column access by name
     return conn
 

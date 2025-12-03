@@ -11,7 +11,7 @@ from unittest.mock import patch
 @pytest.fixture(autouse=True)
 def temporary_db(monkeypatch):
     # Assign a temporary value to DATABASE so we don't affect the live database
-    monkeypatch.setattr(database, 'DATABASE', 'test_database.db')
+    monkeypatch.setenv("LIBRARY_DB_PATH", "unit_test.db")
 
     database.init_database()
     database.add_sample_data()
@@ -24,10 +24,11 @@ def temporary_db(monkeypatch):
     borrow_book_by_patron("987654", 4)
     borrow_book_by_patron("987654", 4)
 
+    # Yield control to the test
     yield
 
-    # Remove the temp database file as it is no longer needed
-    os.remove("test_database.db")
+    # Teardown
+    os.remove("unit_test.db")
 
 def test_borrow_book_by_patron_valid():
     """Testing the valid borrowing of a book, with a valid patron"""

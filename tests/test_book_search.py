@@ -21,7 +21,7 @@ books = [
 @pytest.fixture(autouse=True)
 def temporary_db(monkeypatch):
     # Assign a temporary value to DATABASE so we don't affect the live database
-    monkeypatch.setattr(database, 'DATABASE', 'test_database.db')
+    monkeypatch.setenv("LIBRARY_DB_PATH", "unit_test.db")
 
     database.init_database()
 
@@ -32,7 +32,7 @@ def temporary_db(monkeypatch):
     yield
 
     # Teardown
-    os.remove("test_database.db")
+    os.remove("unit_test.db")
 
 def test_search_books_by_title():
     """Test searching for books by title"""

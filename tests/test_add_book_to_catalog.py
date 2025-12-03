@@ -11,8 +11,8 @@ from unittest.mock import patch
 @pytest.fixture(autouse=True)
 def temporary_db(monkeypatch):
     # Assign a temporary value to DATABASE so we don't affect the live database
-    monkeypatch.setattr(database, 'DATABASE', 'test_database.db')
-    print(f"db: {database.DATABASE}")
+    monkeypatch.setenv("LIBRARY_DB_PATH", "unit_test.db")
+
     database.init_database()
     database.add_sample_data()
 
@@ -20,7 +20,7 @@ def temporary_db(monkeypatch):
     yield
 
     # Teardown
-    os.remove("test_database.db")
+    os.remove("unit_test.db")
 
 
 def test_add_book_valid_input():
